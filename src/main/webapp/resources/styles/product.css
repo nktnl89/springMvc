@@ -1,0 +1,58 @@
+.product {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    height: 400px;
+    width: 350px;
+}
+.opened {
+    flex-direction: row;
+    justify-content: space-around;
+    width: 100%;
+    background-color: whitesmoke;
+    box-shadow: 0px 0px 10px #000;
+}
+
+.product:hover {
+    box-shadow: 0px 0px 10px #000;
+}
+.addProductToOrder:hover {
+    box-shadow: 0px 0px 10px #000;
+    cursor: pointer;
+    font-weight: bold;
+}
+.products {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    min-height: 100%;
+    z-index: 1;
+    width: 100%;
+}
+.productPicture {
+    background-color: white;
+    width: 300px;
+    height: 300px;
+    outline: 1px solid;
+}
+.foundedProducts .productPrice,
+.category .productPrice,
+.foundedProducts .addProductToOrder,
+.category .addProductToOrder,
+.foundedProducts .deleteFromOrder,
+.category .deleteFromOrder,
+.popupBasketContent .addProductToOrder {
+    display: none;
+    height: 50px;
+    width: 200px;
+}
+.popupBasketContent .deleteFromOrder,
+.popupBasketContent .productPrice,
+.popupBasketContent .productText {
+    display: auto;
+    height: 50px;
+    width: 200px;
+}
