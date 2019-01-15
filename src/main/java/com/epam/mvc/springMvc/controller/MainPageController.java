@@ -17,7 +17,7 @@ public class MainPageController {
     @Autowired
     private CategoryService categoryService;
 
-    @RequestMapping("/")
+    @RequestMapping("/home")
     public String home(Model model) {//ModelAndView
 //      @PathVariable(name = "pageId", required = false) String pageId) {
 //        ModelAndView modelAndView = new ModelAndView();
@@ -35,7 +35,6 @@ public class MainPageController {
 //            modelAndView.addObject("dwies", drinkWithIngridientService.getAllDWIByOrderId(orderManager.getOrder().getId()));
 //        }
         model.addAttribute("categories", categoryService.getCategoryList());
-        //model.addAttribute("products", productService.getProductList());
         return "index";
     }
 }

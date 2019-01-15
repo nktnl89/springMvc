@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Authorization</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="../css/authorization.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/authorization.css" />
 </head>
 <body>
     <div class="container">
@@ -14,7 +14,7 @@
             <input type="password" name="password" placeholder="Пароль" required>
             <input type="submit" onSubmit="login" />
             <c:out value="${error}" />
-            <a href="../registration.jsp">Регистрация</a>
+            <a href="registration">Регистрация</a>
         </form>
     </div>
 </body>
