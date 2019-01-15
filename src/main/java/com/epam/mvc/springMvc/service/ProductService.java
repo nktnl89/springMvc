@@ -12,4 +12,10 @@ public interface ProductService {
     void deleteProduct(int id);
 
     void createProduct(Product product);
+
+    List<Product> getProductListByText(String text);
+
+    Product copyPropertyValues(Product receiverProduct, Product sourceProduct);
+
+    List<Product> getProductListByJsonText(String jsonText);
 }

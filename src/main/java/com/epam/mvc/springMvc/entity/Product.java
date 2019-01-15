@@ -5,15 +5,15 @@ public class Product {
     private String img;
     private String text;
     private int price;
-    private Category category;
+    //private Category category;
 
-    public Category getCategory() {
-        return category;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
-    }
+//    public Category getCategory() {
+//        return category;
+//    }
+//
+//    public void setCategory(Category category) {
+//        this.category = category;
+//    }
 
     public int getId() {
         return id;
@@ -53,6 +53,7 @@ public class Product {
         this.text = text;
         this.price = price;
     }
+
     public Product(String img, String text, int price) {
         this.img = img;
         this.text = text;

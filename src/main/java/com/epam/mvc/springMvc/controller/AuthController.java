@@ -23,4 +23,12 @@ public class AuthController {
 
         return modelAndView;
     }
+
+    @RequestMapping("/authorization")
+    public String getAuthPage() {
+
+        return "authorization";
+    }
+
+
 }

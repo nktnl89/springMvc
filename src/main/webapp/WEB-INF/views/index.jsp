@@ -7,19 +7,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" type="text/css" media="screen" href="css/main.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/product.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/search.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/basket.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/category.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/product.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/search.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/basket.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/category.css" />
 </head>
 <body>
     <div class="container">
         <div class="header">
             <div class="login">
-                <%-- <jsp:useBean id="currentUser" class="entity.User" scope="session"/> --%>
-                <%-- <c:set var="currentUser" scope="session" value="${currentUser}" /> --%>
-                <c:out value="Привет, ${currentUser.getLogin()}"><a href="/jsp/authorization.jsp">Вход</a></c:out>
+                <c:out value="Привет, ${currentUser.getLogin()}"><a href="/authorization">Вход</a></c:out>
                 <a href="/logout">Выход</a>
             </div>
             <div class="placeForBanner">мемасики для важных переговоров</div>
@@ -30,21 +28,20 @@
             </div>
         </div>
         <div class="products">
-            <div class="category" id="category1">
-                <div class="categoryName">категория1</div>
-                <c:forEach var="product" items="${products}">
-                    <div class="product" id="${product.getId()}">
-                        <div class="productPicture"><img src="${product.getImg()}"/></div>
-                        <div class="productText">"${product.getText()}"</div>
-                        <div class="productPrice">"${product.getPrice()}"</div>
-                        <div class="addProductToOrder">В корзину</div>
-                        <div class="deleteFromOrder">[X]</div>
-                    </div>
-                </c:forEach>
-            </div>
-            <!-- <div class="category" id="category2">
-                <div class="categoryName">категория2</div>
-            </div> -->
+            <c:forEach var="category" items="${categories}">
+                <div class="category" id="category"+"${category.getId()}">
+                    <div class="categoryName">${category.getName()}</div>
+                    <c:forEach var="product" items="${category.getProductList()}">
+                        <div class="product" id="${product.getId()}">
+                            <div class="productPicture"><img src="${product.getImg()}"/></div>
+                            <div class="productText">${product.getText()}</div>
+                            <div class="productPrice">${product.getPrice()}</div>
+                            <div class="addProductToOrder">В корзину</div>
+                            <div class="deleteFromOrder">[X]</div>
+                        </div>
+                    </c:forEach>
+                </div>
+            </c:forEach>
         </div>
     </div>
     <div class="footer">тут футер</div>
@@ -54,11 +51,11 @@
                 <div class="headline">Поиск:</div>
                 <div class="closeButton">[X]</div>
             </div>
-            <form action="#">
+            <form id="search-form">
                 <input type="text" name="search" id="text-to-find" placeholder="Наименование товара...">
-                <input type="button" value="Найти">
+                <input id="btn-search" type="submit" value="Найти">
             </form>
-            <div class="foundedProducts"></div>
+            <div class="foundedProducts" id="foundedProducts"></div>
         </div>
     </div>
     <div class="popupBasket">
@@ -80,10 +77,10 @@
         </div>
     </div>
 
-    <script src="js/main.js"></script>
-    <script src="js/product.js"></script>
-    <script src="js/search.js"></script>
-    <script src="js/basket.js"></script>
-    <script src="js/jquery-3.3.1.min.js"></script>
+    <script src="scripts/jquery-3.3.1.min.js"></script>
+    <script src="scripts/main.js"></script>
+    <script src="scripts/product.js"></script>
+    <script src="scripts/search.js"></script>
+    <script src="scripts/basket.js"></script>
 </body>
 </html>
