@@ -43,42 +43,11 @@
         </div>
     </div>
     <div class="footer">тут футер</div>
-    <div class="popupSearch">
-        <div class="popupSearchContent">
-            <div class="searchHeader">
-                <div class="headline">Поиск:</div>
-                <div class="closeButton">[X]</div>
-            </div>
-            <form id="searchForm">
-                <input type="text" name="search" id="text-to-find" placeholder="Наименование товара...">
-                <input id="btn-search" type="submit" value="Найти">
-            </form>
-            <div class="foundedProducts" id="foundedProducts"></div>
-        </div>
-    </div>
-    <div class="popupBasket">
-        <div class="popupBasketContent">
-            <div class="basketHeader">
-                <div class="headline">Корзина:</div>
-                <div class="closeButton">[X]</div>
-            </div>
-            <div class="basketProducts"></div>
-            <div class="basketSum">
-                <div>Сумма товаров</div>
-                <div class="productSum"></div>
-                <div class="issueButton">Оформить</div>
-                <div>Скидка 10%</div>
-                <div class="discountSum"></div>
-                <div>Итого</div>
-                <div class="totalSum"></div>
-            </div>
-        </div>
-    </div>
 
     <script src="scripts/jquery-3.3.1.min.js"></script>
-    <script src="scripts/main.js"></script>
     <script src="scripts/product.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/basket.js"></script>
+    <script src="scripts/main.js"></script>
 </body>
 </html>

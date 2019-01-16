@@ -9,42 +9,11 @@ const DISCOUNT_PERCENT = 10;
 
 window.onload = function() {
     $(".product").click(function() {replyClick(this)});
-    $(".search, .basket").click(function() {popupClick(this)});
-    $(".searchHeader .closeButton").click(function() {searchClose()});
-    $(".issueButton, .basketHeader .closeButton").click(function() {basketClose()});
+    //$(".issueButton, .basketHeader .closeButton").click(function() {basketClose()});
+    $(".basket").click(function() {createPopupForBasket()});
     $(".addProductToOrder").click(function() {addProductToOrder(this)});
     $(".deleteFromOrder").click(function() {deleteFromOrder(this)});
-    $(".popupSearchContent [type=button]").click(function() {findProductByName(this)});
-}
-
-$(document).ready(function () {
-    $("#searchForm").submit(function (event) {
-        event.preventDefault();
-        findProductsSubmit();
-    });
-});
-
-function findProductsSubmit() {
-    let search = {}
-    search["search"] = $("#text-to-find").val();
-    $("#btn-search").prop("disabled", true);
-    $.ajax({
-        type: "POST",
-        contentType: "application/json",
-        url: "/api/search",
-        data: JSON.stringify(search),
-        dataType: 'json',
-        cache: false,
-        timeout: 600000,
-        success: function (data) {
-            let foundedProducts = document.querySelector("#foundedProducts");
-            data.forEach(product => {
-                let productObject = new Product(product.id, product.img, product.text, product.price)
-                productObject.createProductElement(foundedProducts);
-            });
-            $("#btn-search").prop("disabled", false);
-        }
-    });
+    $(".search").click(function() {createPopupForSearch()})
 }
 
 let addToBasketAddListener = function(){
@@ -52,16 +21,6 @@ let addToBasketAddListener = function(){
     addProductToOrderElementNodeList.forEach(element => {
         element.addEventListener("click", function() {addProductToOrder(element);}, false);
     });
-}
-let popupClick = function (element) {
-    let selectedElement;
-    if (element.className == "search") {
-        selectedElement = document.querySelector(".popupSearch");
-    }
-    if (element.className == "basket") {
-        selectedElement = document.querySelector(".popupBasket");
-    }
-    selectedElement.style.cssText = "z-index: 10;";
 }
 let calculatePercentsWidthOfElement = function (element) {
     let parent = element.parentNode;

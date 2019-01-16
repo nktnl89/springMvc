@@ -22,23 +22,7 @@ public class MainPageController {
     private UserManager userManager;
 
     @RequestMapping("/home")
-    public String home(Model model) {//ModelAndView
-//      @PathVariable(name = "pageId", required = false) String pageId) {
-//        ModelAndView modelAndView = new ModelAndView();
-//        modelAndView.setViewName("index");
-//        User currentUser = userManager.getUser();
-
-//        modelAndView.addObject("helloPhrase", "Привет, " + currentUser.getLogin());
-//        modelAndView.addObject("currentUserRole", currentUser.getRole());
-//        modelAndView.addObject("drinks", drinkService.getAllDrinks());
-//        modelAndView.addObject("ingridients", ingridientService.getAllIngridients());
-//        if (orderManager.getOrder() == null) {
-//            modelAndView.addObject("currentOrderId", null);
-//        } else {
-//            modelAndView.addObject("currentOrderId", orderManager.getOrder().getId());
-//            modelAndView.addObject("dwies", drinkWithIngridientService.getAllDWIByOrderId(orderManager.getOrder().getId()));
-//        }
-
+    public String home(Model model) {
         model.addAttribute("categories", categoryService.getCategoryList());
         model.addAttribute("currentUser", userManager.getUser());
         if (userManager.getUser().getUserRole().equals(UserRole.ADMIN)) {

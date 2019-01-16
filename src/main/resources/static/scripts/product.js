@@ -179,12 +179,18 @@ function createPopupForNewProduct(){
 }
 function createProductForm(event) {
     event.preventDefault();
+//    $(".createProductForm").find("");
     //тут должен быть результат формы
 //    let product = new Product(productElement.attr("id"),
 //            $("#"+("productImg"+productElement.attr("id"))).attr("src"),
 //            $("#"+("productText"+productElement.attr("id"))).val(),
 //            $("#"+("productPrice"+productElement.attr("id"))).val());
-    //createProductClick(new Product());
+
+    let newProduct = new Product(0,
+                             $("input[name='img']").val(),
+                             $("input[name='text']").val(),
+                             $("input[name='price']").val());
+    createProductClick(newProduct);
     $(".createProductPopup").remove();
 };
 
@@ -203,8 +209,7 @@ function createProductClick(product) {
         timeout: 600000,
         success: function (data) {
             //а тут нужно создать элемент хтмл
-
-//            let product = $("#"+productId);
+            product.createProductElement($(".category"));
             $(".createProductPopup").remove();
         }
     });

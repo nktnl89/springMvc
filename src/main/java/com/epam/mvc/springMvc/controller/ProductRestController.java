@@ -26,8 +26,9 @@ public class ProductRestController {
         return productService.getProductById(id);
     }
 
-    @PostMapping()
+    @PostMapping
     public void createProduct(@RequestBody Product product) {
+        //тут еще нужно установить послдний ид
         productService.createProduct(product);
     }
 

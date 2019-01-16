@@ -1,19 +1,42 @@
 let searchClose = function () {
-    let searchElement = document.querySelector(".popupSearch");
-    searchElement.style.cssText = "z-index: 0;";
+    $(".popupSearch").remove();
 }
-//let findProductByName = function (element) {
-//    let form = element.form;
-//    let searchQuery = form.elements.search.value.toLowerCase();
-//    let foundedProductsElement = document.querySelector(".foundedProducts");
-//    let foundedProductsList = foundedProductsElement.querySelectorAll(".product");
-//    foundedProductsList.forEach(element => {
-//        foundedProductsElement.removeChild(element);
-//    });
-//    productArrayCategory.forEach(element => {
-//        if (element.productText.toLowerCase().indexOf(searchQuery) > -1) {
-//            element.createProductElement(foundedProductsElement);
-//        }
-//    });
-//    setVisibilityProductChildren(form.parentNode, false);
-//}
+function createPopupForSearch(){
+    $("<div>", {class: "popupSearch"}).appendTo($("body"));
+    $("<div>", {class: "popupSearchContent"}).appendTo(".popupSearch");
+    $("<div>", {class: "searchHeader"}).appendTo(".popupSearchContent");
+    $("<div>", {class: "headline", text: "Поиск:"}).appendTo(".searchHeader");
+    $("<div>", {class: "closeButton", text: "[X]"}).appendTo(".searchHeader");
+    $(".closeButton").click(function() {searchClose()});
+    $("<form>", {id: "searchForm"}).appendTo(".popupSearchContent");
+    $("<input>", {type: "text", name: "search", id: "text-to-find", placeholder: "Наименование товара..."}).appendTo("#searchForm");
+    $("<input>", {type: "submit", id: "btn-search", value: "Найти"}).appendTo("#searchForm");
+    $("<div>", {class: "foundedProducts", id: "foundedProducts"}).appendTo(".popupSearchContent");
+    $("#searchForm").submit(function (event) {
+            event.preventDefault();
+            findProductsSubmit();
+        });
+}
+
+function findProductsSubmit() {
+    let search = {}
+    search["search"] = $("#text-to-find").val();
+    $("#btn-search").prop("disabled", true);
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "/api/search",
+        data: JSON.stringify(search),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            let foundedProducts = document.querySelector("#foundedProducts");
+            data.forEach(product => {
+                let productObject = new Product(product.id, product.img, product.text, product.price)
+                productObject.createProductElement(foundedProducts);
+            });
+            $("#btn-search").prop("disabled", false);
+        }
+    });
+}

@@ -1,6 +1,23 @@
+function createPopupForBasket() {
+    $("<div>", {class: "popupBasket"}).appendTo($("body"));
+    $("<div>", {class: "popupBasketContent"}).appendTo(".popupBasket");
+    $("<div>", {class: "basketHeader"}).appendTo(".popupBasketContent");
+    $("<div>", {class: "headline", text: "Корзина:"}).appendTo(".basketHeader");
+    $("<div>", {class: "closeButton", text: "[X]"}).appendTo(".basketHeader");
+    $(".closeButton").click(function() {basketClose()});
+    $("<div>", {class: "basketProducts"}).appendTo(".popupBasketContent");
+    $("<div>", {class: "basketSum"}).appendTo(".popupBasketContent");
+    $("<div>", {text: "Сумма товаров"}).appendTo(".basketSum");
+    $("<div>", {class: "productSum"}).appendTo(".basketSum");
+    $("<div>", {class: "issueButton", text: "Оформить"}).appendTo(".basketSum");
+    $("<div>", {text: "Скидка 10%"}).appendTo(".basketSum");
+    $("<div>", {class: "discountSum"}).appendTo(".basketSum");
+    $("<div>", {text: "Итого"}).appendTo(".basketSum");
+    $("<div>", {class: "totalSum"}).appendTo(".basketSum");
+}
+
 let basketClose = function () {
-    let basketElement = document.querySelector(".popupBasket");
-    basketElement.style.cssText = "z-index: 0;";
+    $(".popupBasket").remove();
 }
 let deleteFromOrder = function (buttonDeleteElement) {
     let productElement = buttonDeleteElement.parentNode;
@@ -12,7 +29,6 @@ let deleteFromOrder = function (buttonDeleteElement) {
     }catch (e) {
         alert(e.message);
     }
-
 }
 let decreaseBasketSum = function (element) {
     PRODUCTS_SUM_ELEMENT.innerText = Number(PRODUCTS_SUM_ELEMENT.innerText) - element.getProductPrice();
