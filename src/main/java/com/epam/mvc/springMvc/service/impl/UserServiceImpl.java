@@ -6,6 +6,8 @@ import com.epam.mvc.springMvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class UserServiceImpl implements UserService {
     @Autowired
@@ -19,5 +21,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByLogin(String login) {
         return userRepository.getUserByLogin(login);
+    }
+
+    @Override
+    public List<User> getUserList() {
+        return userRepository.getUserList();
     }
 }

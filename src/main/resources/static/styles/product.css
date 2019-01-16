@@ -17,6 +17,21 @@
 .product:hover {
     box-shadow: 0px 0px 10px #000;
 }
+.saveChanges:hover {
+    box-shadow: 0px 0px 10px #000;
+    cursor: pointer;
+    font-weight: bold;
+}
+.deleteProduct:hover {
+    box-shadow: 0px 0px 10px #000;
+    cursor: pointer;
+    font-weight: bold;
+}
+.createProduct:hover {
+    box-shadow: 0px 0px 10px #000;
+    cursor: pointer;
+    font-weight: bold;
+}
 .addProductToOrder:hover {
     box-shadow: 0px 0px 10px #000;
     cursor: pointer;

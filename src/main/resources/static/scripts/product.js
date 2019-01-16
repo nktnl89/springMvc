@@ -1,12 +1,12 @@
 function Product(id, productPicture, productText, productPrice) {
     this.id = id;
-    this.productPicture = productPicture;
-    this.productText = productText;
-    this.productPrice = productPrice;
+    this.img = productPicture;
+    this.text = productText;
+    this.price = productPrice;
 
     let productClosure = this;
     this.getProductPrice = function() {
-        return productClosure.productPrice;
+        return productClosure.price;
     }
     this.createProductElement = function (parentNode) {
         let newProductDiv = document.createElement("div");
@@ -17,16 +17,16 @@ function Product(id, productPicture, productText, productPrice) {
         let newProductImg = document.createElement("div");
         newProductImg.className = "productPicture";
         let newImg = document.createElement("img");
-        newImg.setAttribute("src", productClosure.productPicture)
+        newImg.setAttribute("src", productClosure.img)
         newProductImg.appendChild(newImg);
 
         let newProductText = document.createElement("div");
         newProductText.className = "productText";
-        newProductText.innerText = productClosure.productText;
+        newProductText.innerText = productClosure.text;
 
         let newProductPrice = document.createElement("div");
         newProductPrice.className = "productPrice";
-        newProductPrice.innerText = productClosure.productPrice + " р.";
+        newProductPrice.innerText = productClosure.price + " р.";
 
         let newProductAddProductToOrder = document.createElement("div");
         newProductAddProductToOrder.className = "addProductToOrder";
@@ -51,18 +51,18 @@ let createProducts = function () {
     setVisibilityAllProductChildrenToFalse();
 }
 let replyClick = function (element) {
-    if (calculatePercentsWidthOfElement(element) < 80) {
+    //if (calculatePercentsWidthOfElement(element) < 80) {
         closeAnotherProducts();
         setOpenStyle(element);
         setVisibilityAllProductChildrenToFalse();
         setVisibilityProductChildren(element, true);
         element.scrollIntoView(false);
-    } else {
-        closeAnotherProducts();
-        setVisibilityAllProductChildrenToFalse();
-        setCloseStyle(element);
-        element.scrollIntoView(false);
-    }
+//    } else {
+//        closeAnotherProducts();
+//        setVisibilityAllProductChildrenToFalse();
+//        setCloseStyle(element);
+//        element.scrollIntoView(false);
+//    }
 }
 let setCloseStyle = function (element) {
     if (element.classList.contains("opened")) {
@@ -118,6 +118,98 @@ let addProductToOrder = function (buttonAddElement) {
         alert(e.message);
     }
 }
+
+$(".saveChanges").click(function (event) {
+    let productElement = $("#"+this.parentNode.getAttribute("id"));
+
+    let product = new Product(productElement.attr("id"),
+        $("#"+("productImg"+productElement.attr("id"))).attr("src"),
+        $("#"+("productText"+productElement.attr("id"))).val(),
+        $("#"+("productPrice"+productElement.attr("id"))).val());
+
+    saveChangesClick(product);
+});
+function saveChangesClick(product) {
+    $.ajax({
+        type: "PUT",
+        contentType: "application/json",
+        url: "products/update",
+        data: JSON.stringify(product),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+        }
+    });
+}
+$(".deleteProduct").click(function (event) {
+    deleteProductClick(this.parentNode.getAttribute("id"));
+});
+function deleteProductClick(productId) {
+    $.ajax({
+        type: "DELETE",
+        contentType: "application/json",
+        url: "products/delete/"+productId,
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            let product = $("#"+productId);
+            product.detach();
+        }
+    });
+}
+$(".createProduct").click(function (event) {
+    createPopupForNewProduct();
+});
+function createPopupForNewProduct(){
+    let popup = document.createElement("div");
+    let content = document.createElement("div");
+    let form = document.createElement("form");
+
+    $(popup).addClass("createProductPopup")
+        .appendTo($("body"));
+    $(content)
+        .addClass("createProductPopupContent")
+        .appendTo($(popup));
+    $("<form>", {id: "createProductForm"}).appendTo(".createProductPopupContent");
+    $("<input>", {name: "img", type: "text"}).appendTo("#createProductForm");
+    $("<input>", {name: "price", type: "text"}).appendTo("#createProductForm");
+    $("<input>", {name: "text", type: "text"}).appendTo("#createProductForm");
+    $("<input>", {id: "createProductSubmit", type: "button", value: "Создать товар", onclick:"createProductForm(event)"}).appendTo("#createProductForm");
+}
+function createProductForm(event) {
+    event.preventDefault();
+    //тут должен быть результат формы
+//    let product = new Product(productElement.attr("id"),
+//            $("#"+("productImg"+productElement.attr("id"))).attr("src"),
+//            $("#"+("productText"+productElement.attr("id"))).val(),
+//            $("#"+("productPrice"+productElement.attr("id"))).val());
+    //createProductClick(new Product());
+    $(".createProductPopup").remove();
+};
+
+$("#createProductSubmit").click(function (event) {
+    event.preventDefault();
+});
+
+function createProductClick(product) {
+    $.ajax({
+        type: "POST",
+        contentType: "application/json",
+        url: "products/",
+        data: JSON.stringify(product),
+        dataType: 'json',
+        cache: false,
+        timeout: 600000,
+        success: function (data) {
+            //а тут нужно создать элемент хтмл
+
+//            let product = $("#"+productId);
+            $(".createProductPopup").remove();
+        }
+    });
+}
+
 let getProductById = function(productId){
     let selectedProduct = productArrayCategory.find(product => product.id == productId);
     if (selectedProduct === undefined) {

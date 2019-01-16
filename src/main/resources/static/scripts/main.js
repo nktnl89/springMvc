@@ -8,7 +8,6 @@ const BASKET_PRODUCTS_ELEMENT = document.querySelector(".basketProducts");
 const DISCOUNT_PERCENT = 10;
 
 window.onload = function() {
-    //createProducts();
     $(".product").click(function() {replyClick(this)});
     $(".search, .basket").click(function() {popupClick(this)});
     $(".searchHeader .closeButton").click(function() {searchClose()});
@@ -19,14 +18,14 @@ window.onload = function() {
 }
 
 $(document).ready(function () {
-    $("#search-form").submit(function (event) {
+    $("#searchForm").submit(function (event) {
         event.preventDefault();
         findProductsSubmit();
     });
 });
 
 function findProductsSubmit() {
-    var search = {}
+    let search = {}
     search["search"] = $("#text-to-find").val();
     $("#btn-search").prop("disabled", true);
     $.ajax({

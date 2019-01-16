@@ -29,18 +29,15 @@ public class ProductRestController {
     @PostMapping()
     public void createProduct(@RequestBody Product product) {
         productService.createProduct(product);
-        //return "redirect:/";
     }
 
-    @PutMapping("update/{id}")
-    public Product updateProduct(@PathVariable int id, @RequestBody Product product) {
-        return productService.copyPropertyValues(productService.getProductById(id), product);
+    @PutMapping("update")
+    public Product updateProduct(@RequestBody Product product) {
+        return productService.copyPropertyValues(productService.getProductById(product.getId()), product);
     }
 
     @DeleteMapping("delete/{id}")
-    //@GetMapping("/products/delete/{id}")
     public void deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
-        //return "redirect:/";
     }
 }

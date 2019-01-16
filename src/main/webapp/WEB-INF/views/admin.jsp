@@ -19,59 +19,29 @@
                 <a href="/logout">Выход</a>
             </div>
             <div class="placeForBanner">мемасики для важных переговоров</div>
-            <div class="search">Поиск</div>
+            <!--<div class="search">Поиск</div>
             <div class="basket">
                 <div class="basketRef">Корзина</div>
                 <div class="basketPreview">0</div>
-            </div>
+            </div>-->
         </div>
+
         <div class="products">
             <c:forEach var="category" items="${categories}">
                 <div class="category" id="category"+"${category.getId()}">
                     <div class="categoryName">${category.getName()}</div>
                     <c:forEach var="product" items="${category.getProductList()}">
                         <div class="product" id="${product.getId()}">
-                            <div class="productPicture"><img src="${product.getImg()}"/></div>
-                            <div class="productText">${product.getText()}</div>
-                            <div class="productPrice">${product.getPrice()}</div>
-                            <div class="addProductToOrder">В корзину</div>
-                            <div class="deleteFromOrder">[X]</div>
+                            <div class="productPicture"><img id="productImg${product.getId()}" src="${product.getImg()}"/></div>
+                            <div class="productText"><input id="productText${product.getId()}" value=${product.getText()}></div>
+                            <div class="productPrice"><input id="productPrice${product.getId()}" value=${product.getPrice()}></div>
+                            <div class="saveChanges">Сохранить изменения</div>
+                            <div class="deleteProduct">Удалить продукт</div>
                         </div>
                     </c:forEach>
+                    <div class="createProduct">Создать новый продукт</div>
                 </div>
             </c:forEach>
-        </div>
-    </div>
-    <div class="footer">тут футер</div>
-    <div class="popupSearch">
-        <div class="popupSearchContent">
-            <div class="searchHeader">
-                <div class="headline">Поиск:</div>
-                <div class="closeButton">[X]</div>
-            </div>
-            <form id="searchForm">
-                <input type="text" name="search" id="text-to-find" placeholder="Наименование товара...">
-                <input id="btn-search" type="submit" value="Найти">
-            </form>
-            <div class="foundedProducts" id="foundedProducts"></div>
-        </div>
-    </div>
-    <div class="popupBasket">
-        <div class="popupBasketContent">
-            <div class="basketHeader">
-                <div class="headline">Корзина:</div>
-                <div class="closeButton">[X]</div>
-            </div>
-            <div class="basketProducts"></div>
-            <div class="basketSum">
-                <div>Сумма товаров</div>
-                <div class="productSum"></div>
-                <div class="issueButton">Оформить</div>
-                <div>Скидка 10%</div>
-                <div class="discountSum"></div>
-                <div>Итого</div>
-                <div class="totalSum"></div>
-            </div>
         </div>
     </div>
 

@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Authorization</title>
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/authorization.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/registration.css" />
 </head>
 <body>
     <div class="container">

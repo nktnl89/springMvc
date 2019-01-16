@@ -1,8 +1,11 @@
 package com.epam.mvc.springMvc.entity;
 
+import java.lang.annotation.Target;
+
 public class User {
     private String login;
     private String password;
+    private UserRole userRole;
 
     public String getLogin() {
         return login;
@@ -21,6 +24,14 @@ public class User {
     }
 
     public User() {
+    }
+
+    public UserRole getUserRole() {
+        return userRole;
+    }
+
+    public void setUserRole(UserRole userRole) {
+        this.userRole = userRole;
     }
 
     public User(String login, String password) {

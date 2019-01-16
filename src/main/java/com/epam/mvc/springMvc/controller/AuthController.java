@@ -1,6 +1,7 @@
 package com.epam.mvc.springMvc.controller;
 
 import com.epam.mvc.springMvc.entity.User;
+import com.epam.mvc.springMvc.entity.UserRole;
 import com.epam.mvc.springMvc.exception.NotFoundException;
 import com.epam.mvc.springMvc.manager.UserManager;
 import com.epam.mvc.springMvc.service.UserService;
@@ -40,17 +41,22 @@ public class AuthController {
     public ModelAndView registration(HttpServletRequest request) {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("registration");
+        modelAndView.addObject("error", "");
         return modelAndView;
     }
 
     @PostMapping("/registration")
     public ModelAndView getNewUser(@Validated User user, BindingResult result) {
         ModelAndView modelAndView = new ModelAndView();
-        if (result.hasErrors()) {
-            //modelAndView.addObject("errors", result.getAllErrors());
-        } else {
+        if (userService.getUserByLogin(user.getLogin()) == null) {
+            user.setUserRole(UserRole.USER);
             userService.addUser(user);
+            modelAndView.addObject("error", "");
             modelAndView.setViewName("redirect:/login");
+
+        } else {
+            modelAndView.addObject("error", "Пользователь с таким логином уже существует");
+            modelAndView.setViewName("registration");
         }
         return modelAndView;
     }
@@ -67,6 +73,7 @@ public class AuthController {
 //                if (orderService.getIdActiveOrder(currentUser.getId()) != 0) {
 //                    orderManager.setOrder(orderService.getOrderById(orderService.getIdActiveOrder(currentUser.getId())));
 //                }
+
                 modelAndView.setViewName("redirect:/home");
             } else {
                 modelAndView.addObject("errorMsg", "Пароль неверен");
