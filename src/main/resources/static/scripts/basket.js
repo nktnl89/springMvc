@@ -15,7 +15,7 @@ function createPopupForBasket() {
     $("<div>", {text: "Итого"}).appendTo(".basketSum");
     $("<div>", {class: "totalSum"}).appendTo(".basketSum");
 
-    createProductElement($(".basketProducts"));
+    createProductElement(document.querySelector(".basketProducts"));
 }
 
 function createProductElement(parentNode) {
@@ -28,7 +28,9 @@ function createProductElement(parentNode) {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            data.forEach(new Product(currentValue.id,currentValue.img,currentValue.text,currentValue.price).createProductElement(parentNode));
+            data.forEach(function(product, i, data) {
+                new Product(product.id, product.img, product.text, product.price).createProductElement(parentNode);
+            });
         }
     });
 }
@@ -75,6 +77,8 @@ function addProductToOrderClick(productId) {
         timeout: 600000,
         success: function (data) {
             increaseCounterBasket(1);
+            //тут нужно рассчитать суммы для корзины, видимо суммы тоже надо засунуть в класс баскет, либо рассчитывать каждый раз
+            //исходя из того что есть в корзине
 
             //        increaseBasketSum(selectedProduct);
             //        selectedProduct.createProductElement(BASKET_PRODUCTS_ELEMENT);
@@ -93,11 +97,14 @@ function deleteFromOrderClick(productId) {
         contentType: "application/json",
         url: "products/basket/delete",
         data: productId,
-        dataType: 'text',
+        dataType: "text",
         cache: false,
         timeout: 600000,
         success: function (data) {
             increaseCounterBasket(-1);
+            //тут нужно удалить элемент продукт из карзины
+            //и рассчитать суммы в корзине
+
 
             //        increaseBasketSum(selectedProduct);
             //        selectedProduct.createProductElement(BASKET_PRODUCTS_ELEMENT);

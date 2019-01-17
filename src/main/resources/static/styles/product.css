@@ -57,9 +57,9 @@
 .foundedProducts .addProductToOrder,
 .foundedProducts .deleteFromOrder,
 .popupBasketContent .addProductToOrder,
-.product:not(.opened):not(.admin) .productPrice,
-.product:not(.opened):not(.admin) .addProductToOrder,
-.product:not(.opened):not(.admin) .deleteFromOrder {
+:not(.popupBasketContent) .productPrice,/* .product:not(.opened):not(.admin)*/
+:not(.popupBasketContent) .addProductToOrder,/*.product:not(.opened):not(.admin)  */
+:not(.popupBasketContent) .deleteFromOrder {/*.product:not(.opened):not(.admin) */
     display: none;
     height: 50px;
     width: 200px;
@@ -68,12 +68,10 @@
 .popupBasketContent .productPrice,
 .popupBasketContent .productText,
 .product.opened.productPrice,
-.product.opened.productPrice,
 .product.opened.productText,
 .product.admin.productPrice,
-.product.admin.productPrice,
 .product.admin.productText {
-    display: auto;
+    display: block;
     height: 50px;
     width: 200px;
 }

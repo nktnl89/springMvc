@@ -62,10 +62,11 @@ public class ProductRestController {
     }
 
     @PostMapping("basket/delete")
-    public void deleteFromBasket(@RequestBody int productId) {
+    public Product deleteFromBasket(@RequestBody int productId) {
         basketService.deleteProductFromBasket(
                 basketService.getBasketByUser(userManager.getUser()),
                 productService.getProductById(productId));
+        return productService.getProductById(productId);
     }
 
     @PostMapping("basket/issue")
