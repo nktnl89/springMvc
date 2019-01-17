@@ -9,7 +9,7 @@
 <body>
     <div class="container">
         <div>Регистрация</div>
-        <form id="registrationForm" method="post" action="registration" ><!--onSubmit="validateForm()"-->
+        <form id="registrationForm" method="post" action="registration" >
             <input type="text" name="name" placeholder="Имя" required>
             <input type="text" name="surname" placeholder="Фамилия" required>
             <input type="text" name="login" placeholder="Логин" required>

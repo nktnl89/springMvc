@@ -1,4 +1,4 @@
-let searchClose = function () {
+function searchClose() {
     $(".popupSearch").remove();
 }
 function createPopupForSearch(){
@@ -33,8 +33,7 @@ function findProductsSubmit() {
         success: function (data) {
             let foundedProducts = document.querySelector("#foundedProducts");
             data.forEach(product => {
-                let productObject = new Product(product.id, product.img, product.text, product.price)
-                productObject.createProductElement(foundedProducts);
+                new Product(product.id, product.img, product.text, product.price).createProductElement(foundedProducts);
             });
             $("#btn-search").prop("disabled", false);
         }

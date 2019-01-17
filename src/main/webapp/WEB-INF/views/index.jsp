@@ -3,13 +3,13 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <html>
 <head>
-    <title>Page Title</title>
+    <title>ПОКУПАЙ!!!</title>
     <link rel="stylesheet" type="text/css" media="screen" href="styles/main.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/product.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/search.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/basket.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/category.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/createProduct.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/newProductPopup.css" />
 </head>
 <body>
     <div class="container">

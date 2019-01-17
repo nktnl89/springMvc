@@ -1,4 +1,6 @@
 .categoryName {
+    display: flex;
+    justify-content: flex-start;
     background-color: whitesmoke;
     height: 50px;
     position: sticky;
@@ -7,6 +9,21 @@
     top: 50px;
     width: 100%;
 }
+.createProduct {
+    width: 50%;
+}
+.categoryHeader{
+    display: flex;
+    justify-content: flex-start;
+    background-color: whitesmoke;
+    height: 50px;
+    position: sticky;
+    font-size: 30px;
+    text-align: center;
+    top: 50px;
+    width: 100%;
+}
+
 .category {
     align-content: stretch;
     display: flex;

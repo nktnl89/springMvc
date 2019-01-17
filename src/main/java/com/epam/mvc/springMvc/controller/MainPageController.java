@@ -25,6 +25,7 @@ public class MainPageController {
     public String home(Model model) {
         model.addAttribute("categories", categoryService.getCategoryList());
         model.addAttribute("currentUser", userManager.getUser());
+
         if (userManager.getUser().getUserRole().equals(UserRole.ADMIN)) {
             return "admin";
         }

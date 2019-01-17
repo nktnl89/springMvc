@@ -17,6 +17,7 @@ public class UserRepositoryImpl implements UserRepository {
         admin.setUserRole(UserRole.ADMIN);
         User user = new User("User", "123");
         user.setUserRole(UserRole.USER);
+
         userList.add(admin);
         userList.add(user);
     }

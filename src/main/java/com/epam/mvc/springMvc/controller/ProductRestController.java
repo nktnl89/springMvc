@@ -1,6 +1,9 @@
 package com.epam.mvc.springMvc.controller;
 
 import com.epam.mvc.springMvc.entity.Product;
+import com.epam.mvc.springMvc.entity.User;
+import com.epam.mvc.springMvc.manager.UserManager;
+import com.epam.mvc.springMvc.service.BasketService;
 import com.epam.mvc.springMvc.service.ProductService;
 import com.epam.mvc.springMvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +18,10 @@ public class ProductRestController {
     private UserService userService;
     @Autowired
     private ProductService productService;
+    @Autowired
+    private UserManager userManager;
+    @Autowired
+    private BasketService basketService;
 
     @GetMapping
     public List<Product> products() {
@@ -27,9 +34,11 @@ public class ProductRestController {
     }
 
     @PostMapping
-    public void createProduct(@RequestBody Product product) {
-        //тут еще нужно установить послдний ид
+    public Product createProduct(@RequestBody Product product) {
+        int newProductId = productService.getLastProductId();
+        product.setId(++newProductId);
         productService.createProduct(product);
+        return product;
     }
 
     @PutMapping("update")
@@ -40,5 +49,34 @@ public class ProductRestController {
     @DeleteMapping("delete/{id}")
     public void deleteProduct(@PathVariable int id) {
         productService.deleteProduct(id);
+    }
+
+    @PostMapping("basket/add")
+    public void addToBasket(@RequestBody int productId) {
+        User currentUser = userManager.getUser();
+        if (currentUser != null) {
+            basketService.addProductToBasket(
+                    basketService.getBasketByUser(currentUser),
+                    productService.getProductById(productId));
+        }
+    }
+
+    @PostMapping("basket/delete")
+    public void deleteFromBasket(@RequestBody int productId) {
+        basketService.deleteProductFromBasket(
+                basketService.getBasketByUser(userManager.getUser()),
+                productService.getProductById(productId));
+    }
+
+    @PostMapping("basket/issue")
+    public void issueOrder() {
+        //офрмляем current user? херня же
+    }
+
+    @PostMapping("basket")
+    public List<Product> getBasketProductList() {
+        return basketService.getProductList(
+                basketService.getBasketByUser(
+                        userManager.getUser()));
     }
 }

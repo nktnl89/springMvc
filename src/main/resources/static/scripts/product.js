@@ -8,7 +8,19 @@ function Product(id, productPicture, productText, productPrice) {
     this.getProductPrice = function() {
         return productClosure.price;
     }
-    this.createProductElement = function (parentNode) {
+    this.createProductElementForAdmin = function(parentNode) {
+        $("<div>", {class: "product opened admin", id: this.id}).appendTo(parentNode);
+        $("<div>", {class: "productPicture"}).appendTo("#"+this.id+".product");
+        $("<img>", {id: "productImg"+this.id, src: this.img}).appendTo($("#"+this.id).children(".productPicture"));
+        $("<div>", {class: "productText"}).appendTo("#"+this.id+".product");
+        $("<input>", {id: "productText"+this.id, value: this.text}).appendTo($("#"+this.id).children(".productText"));
+        $("<div>", {class: "productPrice"}).appendTo("#"+this.id+".product");
+        $("<input>", {id: "productPrice"+this.id, value: this.price}).appendTo($("#"+this.id).children(".productPrice"));
+        $("<div>", {class: "saveChanges", text: "Сохранить изменения", onclick: "saveChangesOnClick(this)"}).appendTo("#"+this.id+".product");
+        $("<div>", {class: "deleteProduct", text: "Удалить продукт", onclick: "deleteProductOnClick(this)"}).appendTo("#"+this.id+".product");
+    }
+
+    this.createProductElement = function(parentNode) {
         let newProductDiv = document.createElement("div");
         newProductDiv.className = "product";
         newProductDiv.setAttribute("id", productClosure.id);
@@ -47,32 +59,32 @@ function Product(id, productPicture, productText, productPrice) {
         parentNode.appendChild(newProductDiv);
     }
 }
-let createProducts = function () {
+function createProducts() {
     setVisibilityAllProductChildrenToFalse();
 }
-let replyClick = function (element) {
-    //if (calculatePercentsWidthOfElement(element) < 80) {
+function replyClick(element) {
+    if (calculatePercentsWidthOfElement(element) < 80) {
         closeAnotherProducts();
         setOpenStyle(element);
         setVisibilityAllProductChildrenToFalse();
         setVisibilityProductChildren(element, true);
         element.scrollIntoView(false);
-//    } else {
-//        closeAnotherProducts();
-//        setVisibilityAllProductChildrenToFalse();
-//        setCloseStyle(element);
-//        element.scrollIntoView(false);
-//    }
+    } else {
+        closeAnotherProducts();
+        setVisibilityAllProductChildrenToFalse();
+        setCloseStyle(element);
+        element.scrollIntoView(false);
+    }
 }
-let setCloseStyle = function (element) {
+function setCloseStyle(element) {
     if (element.classList.contains("opened")) {
         element.classList.remove("opened");
     }
 }
-let setOpenStyle = function (element) {
+function setOpenStyle(element) {
     element.classList.add("opened");
 }
-let closeAnotherProducts = function () {
+function closeAnotherProducts() {
     let productsElementNodeList = document.querySelectorAll(".product.opened");
     productsElementNodeList.forEach(element => {
         if (calculatePercentsWidthOfElement(element) > 80) {
@@ -80,7 +92,7 @@ let closeAnotherProducts = function () {
         }
     })
 }
-let setVisibilityAllProductChildrenToFalse = function () {
+function setVisibilityAllProductChildrenToFalse() {
     let stringSelector = ".category .productPrice, \
         .category .addProductToOrder, \
         .category .deleteFromOrder,\
@@ -92,7 +104,7 @@ let setVisibilityAllProductChildrenToFalse = function () {
         elementChild.style.cssText = "display: none;";
     });
 }
-let setVisibilityProductChildren = function (element, value) {
+function setVisibilityProductChildren(element, value) {
     let productChildrenNodeList = element.querySelectorAll(".productPrice, .addProductToOrder");
     productChildrenNodeList.forEach(elementChild => {
         if (value) {
@@ -104,23 +116,9 @@ let setVisibilityProductChildren = function (element, value) {
         }
     });
 }
-let addProductToOrder = function (buttonAddElement) {
-    let productElement = buttonAddElement.parentNode;
-    try {
-        let selectedProduct = getProductById(productElement.getAttribute("id"));
-        increaseCounterBasket(1);
-        increaseBasketSum(selectedProduct);
-        selectedProduct.createProductElement(BASKET_PRODUCTS_ELEMENT);
-        BASKET_PRODUCTS_ELEMENT.querySelectorAll(".product").forEach(element => {
-            element.setAttribute("onClick", null);
-        });
-    } catch (e) {
-        alert(e.message);
-    }
-}
 
-$(".saveChanges").click(function (event) {
-    let productElement = $("#"+this.parentNode.getAttribute("id"));
+function saveChangesOnClick(saveBtn) {
+    let productElement = $("#"+saveBtn.parentNode.getAttribute("id"));
 
     let product = new Product(productElement.attr("id"),
         $("#"+("productImg"+productElement.attr("id"))).attr("src"),
@@ -128,7 +126,7 @@ $(".saveChanges").click(function (event) {
         $("#"+("productPrice"+productElement.attr("id"))).val());
 
     saveChangesClick(product);
-});
+}
 function saveChangesClick(product) {
     $.ajax({
         type: "PUT",
@@ -142,9 +140,9 @@ function saveChangesClick(product) {
         }
     });
 }
-$(".deleteProduct").click(function (event) {
-    deleteProductClick(this.parentNode.getAttribute("id"));
-});
+function deleteProductOnClick(deleteBtn) {
+    deleteProductClick(deleteBtn.parentNode.getAttribute("id"));
+}
 function deleteProductClick(productId) {
     $.ajax({
         type: "DELETE",
@@ -162,34 +160,24 @@ $(".createProduct").click(function (event) {
     createPopupForNewProduct();
 });
 function createPopupForNewProduct(){
-    let popup = document.createElement("div");
-    let content = document.createElement("div");
-    let form = document.createElement("form");
-
-    $(popup).addClass("createProductPopup")
-        .appendTo($("body"));
-    $(content)
-        .addClass("createProductPopupContent")
-        .appendTo($(popup));
+    $("<div>", {class: "createProductPopup"}).appendTo($("body"));
+    $("<div>", {class: "createProductPopupContent"}).appendTo(".createProductPopup");
+    $("<div>", {class: "newProductHeader"}).appendTo(".createProductPopupContent");
+    $("<div>", {class: "headline", text: "Новый продукт:"}).appendTo(".newProductHeader");
+    $("<div>", {class: "closeButton", text: "[X]"}).appendTo(".newProductHeader");
+    $(".closeButton").click(function() {$(".createProductPopup").remove()});
     $("<form>", {id: "createProductForm"}).appendTo(".createProductPopupContent");
-    $("<input>", {name: "img", type: "text"}).appendTo("#createProductForm");
-    $("<input>", {name: "price", type: "text"}).appendTo("#createProductForm");
-    $("<input>", {name: "text", type: "text"}).appendTo("#createProductForm");
+    $("<input>", {name: "img", type: "text", placeholder: "Путь до картинки"}).appendTo("#createProductForm");
+    $("<input>", {name: "price", type: "text", placeholder: "Цена"}).appendTo("#createProductForm");
+    $("<input>", {name: "text", type: "text", placeholder: "Описание"}).appendTo("#createProductForm");
     $("<input>", {id: "createProductSubmit", type: "button", value: "Создать товар", onclick:"createProductForm(event)"}).appendTo("#createProductForm");
 }
 function createProductForm(event) {
     event.preventDefault();
-//    $(".createProductForm").find("");
-    //тут должен быть результат формы
-//    let product = new Product(productElement.attr("id"),
-//            $("#"+("productImg"+productElement.attr("id"))).attr("src"),
-//            $("#"+("productText"+productElement.attr("id"))).val(),
-//            $("#"+("productPrice"+productElement.attr("id"))).val());
-
     let newProduct = new Product(0,
-                             $("input[name='img']").val(),
-                             $("input[name='text']").val(),
-                             $("input[name='price']").val());
+        $("input[name='img']").val(),
+        $("input[name='text']").val(),
+        $("input[name='price']").val());
     createProductClick(newProduct);
     $(".createProductPopup").remove();
 };
@@ -208,14 +196,13 @@ function createProductClick(product) {
         cache: false,
         timeout: 600000,
         success: function (data) {
-            //а тут нужно создать элемент хтмл
-            product.createProductElement($(".category"));
+            new Product(data.id, data.img, data.text, data.price).createProductElementForAdmin(document.querySelector(".category"));
             $(".createProductPopup").remove();
         }
     });
 }
 
-let getProductById = function(productId){
+function getProductById(productId){
     let selectedProduct = productArrayCategory.find(product => product.id == productId);
     if (selectedProduct === undefined) {
         throw new RangeError(`Продукт с id ${productId} не найден!`);

@@ -70,10 +70,6 @@ public class AuthController {
         } else {
             if (currentUser.getPassword().equals(user.getPassword())) {
                 userManager.setUser(currentUser);
-//                if (orderService.getIdActiveOrder(currentUser.getId()) != 0) {
-//                    orderManager.setOrder(orderService.getOrderById(orderService.getIdActiveOrder(currentUser.getId())));
-//                }
-
                 modelAndView.setViewName("redirect:/home");
             } else {
                 modelAndView.addObject("errorMsg", "Пароль неверен");

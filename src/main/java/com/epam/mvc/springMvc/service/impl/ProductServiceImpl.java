@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -36,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
 
     @Override
     public void createProduct(Product product) {
-        product.setId(productRepository.getLastProductId());
         productRepository.createProduct(product);
     }
 
@@ -73,5 +73,11 @@ public class ProductServiceImpl implements ProductService {
         }.getType();
         Map<String, String> searchMap = gson.fromJson(jsonText, type);
         return getProductListByText(searchMap.get("search"));
+    }
+
+    @Override
+    public int getLastProductId() {
+        Product maxIdProduct = Collections.max(productRepository.getProductList());
+        return maxIdProduct.getId();
     }
 }

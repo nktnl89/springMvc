@@ -4,15 +4,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Basket {
-    private User owner;
     private List<Product> productList = new ArrayList<>();
 
-    public User getOwner() {
-        return owner;
+    public int getId() {
+        return id;
     }
 
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    private int id;
+    private User user;
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
     public List<Product> getProductList() {
@@ -23,11 +33,4 @@ public class Basket {
         this.productList = productList;
     }
 
-    public Basket(User owner, List<Product> productList) {
-        this.owner = owner;
-        this.productList = productList;
-    }
-
-    public Basket() {
-    }
 }

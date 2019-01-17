@@ -1,6 +1,6 @@
 package com.epam.mvc.springMvc.entity;
 
-public class Product {
+public class Product implements Comparable<Product> {
     private int id;
     private String img;
     private String text;
@@ -61,5 +61,13 @@ public class Product {
     }
 
     public Product() {
+    }
+
+    @Override
+    public int compareTo(Product o) {
+        if (o == null) {
+            return 1;
+        }
+        return this.getId() - o.getId();
     }
 }

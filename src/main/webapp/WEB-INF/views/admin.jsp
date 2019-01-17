@@ -9,7 +9,7 @@
     <link rel="stylesheet" type="text/css" media="screen" href="styles/search.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/basket.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="styles/category.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="styles/createProduct.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="styles/newProductPopup.css" />
 </head>
 <body>
     <div class="container">
@@ -19,19 +19,17 @@
                 <a href="/logout">Выход</a>
             </div>
             <div class="placeForBanner">мемасики для важных переговоров</div>
-            <!--<div class="search">Поиск</div>
-            <div class="basket">
-                <div class="basketRef">Корзина</div>
-                <div class="basketPreview">0</div>
-            </div>-->
         </div>
 
         <div class="products">
             <c:forEach var="category" items="${categories}">
                 <div class="category" id="category"+"${category.getId()}">
-                    <div class="categoryName">${category.getName()}</div>
+                    <div class="categoryHeader">
+                        <div class="categoryName">${category.getName()}</div>
+                        <div class="createProduct">Создать новый продукт</div>
+                    </div>
                     <c:forEach var="product" items="${category.getProductList()}">
-                        <div class="product" id="${product.getId()}">
+                        <div class="product opened admin" id="${product.getId()}">
                             <div class="productPicture"><img id="productImg${product.getId()}" src="${product.getImg()}"/></div>
                             <div class="productText"><input id="productText${product.getId()}" value=${product.getText()}></div>
                             <div class="productPrice"><input id="productPrice${product.getId()}" value=${product.getPrice()}></div>
@@ -39,14 +37,13 @@
                             <div class="deleteProduct">Удалить продукт</div>
                         </div>
                     </c:forEach>
-                    <div class="createProduct">Создать новый продукт</div>
                 </div>
             </c:forEach>
         </div>
     </div>
 
     <script src="scripts/jquery-3.3.1.min.js"></script>
-    <script src="scripts/main.js"></script>
+    <script src="scripts/mainAdmin.js"></script>
     <script src="scripts/product.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/basket.js"></script>

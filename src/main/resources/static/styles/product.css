@@ -54,19 +54,25 @@
     outline: 1px solid;
 }
 .foundedProducts .productPrice,
-.category .productPrice,
 .foundedProducts .addProductToOrder,
-.category .addProductToOrder,
 .foundedProducts .deleteFromOrder,
-.category .deleteFromOrder,
-.popupBasketContent .addProductToOrder {
+.popupBasketContent .addProductToOrder,
+.product:not(.opened):not(.admin) .productPrice,
+.product:not(.opened):not(.admin) .addProductToOrder,
+.product:not(.opened):not(.admin) .deleteFromOrder {
     display: none;
     height: 50px;
     width: 200px;
 }
 .popupBasketContent .deleteFromOrder,
 .popupBasketContent .productPrice,
-.popupBasketContent .productText {
+.popupBasketContent .productText,
+.product.opened.productPrice,
+.product.opened.productPrice,
+.product.opened.productText,
+.product.admin.productPrice,
+.product.admin.productPrice,
+.product.admin.productText {
     display: auto;
     height: 50px;
     width: 200px;

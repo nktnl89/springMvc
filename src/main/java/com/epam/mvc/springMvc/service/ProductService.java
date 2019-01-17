@@ -18,4 +18,6 @@ public interface ProductService {
     Product copyPropertyValues(Product receiverProduct, Product sourceProduct);
 
     List<Product> getProductListByJsonText(String jsonText);
+
+    int getLastProductId();
 }
