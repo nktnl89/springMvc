@@ -5,6 +5,8 @@ import java.util.List;
 
 public class Basket {
     private List<Product> productList = new ArrayList<>();
+    private int id;
+    private User user;
 
     public int getId() {
         return id;
@@ -13,9 +15,6 @@ public class Basket {
     public void setId(int id) {
         this.id = id;
     }
-
-    private int id;
-    private User user;
 
     public User getUser() {
         return user;

@@ -13,14 +13,9 @@ window.onload = function() {
     $(".addProductToOrder").click(function() {addProductToOrder(this)});
     $(".deleteFromOrder").click(function() {deleteFromOrder(this)});
     $(".search").click(function() {createPopupForSearch()})
+    setVisibilityAllProductChildrenToFalse();
 }
 
-//function addToBasketAddListener(){
-//    let addProductToOrderElementNodeList = document.querySelectorAll(".addProductToOrder");
-//    addProductToOrderElementNodeList.forEach(element => {
-//        element.addEventListener("click", function() {addProductToOrder(element);}, false);
-//    });
-//}
 function calculatePercentsWidthOfElement(element) {
     let parent = element.parentNode;
     let widthPercents = Math.floor((element.offsetWidth / parent.offsetWidth) * 100);

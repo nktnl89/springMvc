@@ -9,6 +9,7 @@ import com.epam.mvc.springMvc.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
@@ -22,6 +23,8 @@ public class ProductRestController {
     private UserManager userManager;
     @Autowired
     private BasketService basketService;
+    @Autowired
+    private HttpServletRequest httpServletRequest;
 
     @GetMapping
     public List<Product> products() {
@@ -52,13 +55,15 @@ public class ProductRestController {
     }
 
     @PostMapping("basket/add")
-    public void addToBasket(@RequestBody int productId) {
+    public Product addToBasket(@RequestBody int productId) {
         User currentUser = userManager.getUser();
         if (currentUser != null) {
             basketService.addProductToBasket(
                     basketService.getBasketByUser(currentUser),
                     productService.getProductById(productId));
+            return productService.getProductById(productId);
         }
+        return null;
     }
 
     @PostMapping("basket/delete")
@@ -71,7 +76,7 @@ public class ProductRestController {
 
     @PostMapping("basket/issue")
     public void issueOrder() {
-        //офрмляем current user? херня же
+        //надо записывать состояние кудато
     }
 
     @PostMapping("basket")

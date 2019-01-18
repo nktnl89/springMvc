@@ -27,7 +27,7 @@ function findProductsSubmit() {
         contentType: "application/json",
         url: "/api/search",
         data: JSON.stringify(search),
-        dataType: 'json',
+        dataType: "text",
         cache: false,
         timeout: 600000,
         success: function (data) {

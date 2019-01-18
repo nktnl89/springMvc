@@ -16,18 +16,20 @@
     padding: 10px;
     width: 80%;
     min-height: 200px;
+}
 
 #createProductForm {
     align-items: center;
     display: flex;
     justify-content: center;
     flex-direction: column;
+    width: 300px;
 }
 .newProductHeader {
     display: flex;
     height: 100px;
     margin-bottom: 20px;
-    justify-content: flex-start;
+    justify-content: space-between;
     flex-direction: row;
 }
 .newProductHeader.closeButton {
@@ -38,4 +40,8 @@
     box-shadow: 0px 0px 10px #000;
     cursor: pointer;
     font-weight: bold;
+}
+input{
+    padding: 5px;
+    margin: 5px;
 }

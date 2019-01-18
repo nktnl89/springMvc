@@ -51,12 +51,6 @@ public class ProductServiceImpl implements ProductService {
         });
         return result;
 
-//        return (List<Product>) productRepository
-//                .getProductList()
-//                .stream()
-//                .filter(product -> product.getText().equals(text))
-//                .findAny()
-//                .orElse(null);
     }
 
     @Override

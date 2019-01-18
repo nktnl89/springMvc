@@ -33,7 +33,10 @@ public class UserRepositoryImpl implements UserRepository {
 
     @Override
     public User getUserByLogin(String login) {
-        return userList.stream().filter(user -> user.getLogin().equals(login)).findFirst().orElse(null);
+        return userList.stream()
+                .filter(user -> user.getLogin().equals(login))
+                .findFirst()
+                .orElse(null);
     }
 
     @Override

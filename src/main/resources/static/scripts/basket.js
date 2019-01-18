@@ -24,41 +24,30 @@ function createProductElement(parentNode) {
         contentType: "application/json",
         url: "products/basket",
         data: null,
-        dataType: 'json',
+        dataType: "json",
         cache: false,
         timeout: 600000,
         success: function (data) {
             data.forEach(function(product, i, data) {
                 new Product(product.id, product.img, product.text, product.price).createProductElement(parentNode);
+                increaseBasketSum(product.price);
             });
         }
     });
 }
 
-
 function basketClose() {
     $(".popupBasket").remove();
 }
-function deleteFromOrder(buttonDeleteElement) {
-    let productElement = buttonDeleteElement.parentNode;
-    try {
-        let selectedProduct = getProductById(productElement.getAttribute("id"));
-        increaseCounterBasket(-1);
-        decreaseBasketSum(selectedProduct);
-        BASKET_PRODUCTS_ELEMENT.removeChild(productElement);
-    }catch (e) {
-        alert(e.message);
-    }
-}
-function decreaseBasketSum(element) {
-    PRODUCTS_SUM_ELEMENT.innerText = Number(PRODUCTS_SUM_ELEMENT.innerText) - element.getProductPrice();
-    DISCOUNT_SUM_ELEMENT.innerText = Number(DISCOUNT_SUM_ELEMENT.innerText) - calculatePercent(element.getProductPrice(), DISCOUNT_PERCENT);
-    TOTAL_SUM_ELEMENT.innerText = PRODUCTS_SUM_ELEMENT.innerText - DISCOUNT_SUM_ELEMENT.innerText;
+function decreaseBasketSum(productPrice) {
+    $(".productSum").text(Number($(".productSum").text()) - productPrice);
+    $(".discountSum").text(Number($(".discountSum").text()) - calculatePercent(Number(productPrice), DISCOUNT_PERCENT));
+    $(".totalSum").text($(".productSum").text() - $(".discountSum").text());
 }
 function increaseBasketSum(productPrice) {
-    PRODUCTS_SUM_ELEMENT.innerText = Number(PRODUCTS_SUM_ELEMENT.innerText) + productPrice;
-    DISCOUNT_SUM_ELEMENT.innerText = Number(DISCOUNT_SUM_ELEMENT.innerText)+calculatePercent(Number(productPrice), DISCOUNT_PERCENT);
-    TOTAL_SUM_ELEMENT.innerText = PRODUCTS_SUM_ELEMENT.innerText - DISCOUNT_SUM_ELEMENT.innerText;
+    $(".productSum").text(Number($(".productSum").text()) + productPrice);
+    $(".discountSum").text(Number($(".discountSum").text())+calculatePercent(Number(productPrice), DISCOUNT_PERCENT));
+    $(".totalSum").text($(".productSum").text() - $(".discountSum").text());
 }
 function increaseCounterBasket(count) {
     BASKET_PREVIEW_ELEMENT.innerText = parseInt(BASKET_PREVIEW_ELEMENT.innerText) + count;
@@ -72,45 +61,30 @@ function addProductToOrderClick(productId) {
         contentType: "application/json",
         url: "products/basket/add",
         data: productId,
-        dataType: 'text',
+        dataType: "json",
         cache: false,
         timeout: 600000,
         success: function (data) {
             increaseCounterBasket(1);
-            //тут нужно рассчитать суммы для корзины, видимо суммы тоже надо засунуть в класс баскет, либо рассчитывать каждый раз
-            //исходя из того что есть в корзине
-
-            //        increaseBasketSum(selectedProduct);
-            //        selectedProduct.createProductElement(BASKET_PRODUCTS_ELEMENT);
-            //        BASKET_PRODUCTS_ELEMENT.querySelectorAll(".product").forEach(element => {
-            //            element.setAttribute("onClick", null);
-            //        });
         }
     });
 }
 function deleteFromOrder(buttonAddElement) {
-    deleteFromOrderClick(buttonAddElement.parentNode.getAttribute("id"));
+    deleteFromOrderClick(buttonAddElement.parentNode);
 }
-function deleteFromOrderClick(productId) {
+function deleteFromOrderClick(productNode) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "products/basket/delete",
-        data: productId,
-        dataType: "text",
+        data: productNode.getAttribute("id"),
+        dataType: "json",
         cache: false,
         timeout: 600000,
         success: function (data) {
             increaseCounterBasket(-1);
-            //тут нужно удалить элемент продукт из карзины
-            //и рассчитать суммы в корзине
-
-
-            //        increaseBasketSum(selectedProduct);
-            //        selectedProduct.createProductElement(BASKET_PRODUCTS_ELEMENT);
-            //        BASKET_PRODUCTS_ELEMENT.querySelectorAll(".product").forEach(element => {
-            //            element.setAttribute("onClick", null);
-            //        });
+            decreaseBasketSum(data.price);
+            productNode.remove();
         }
     });
 }
@@ -123,14 +97,7 @@ function issueOrder() {
         cache: false,
         timeout: 600000,
         success: function () {
-            //increaseCounterBasket(-1);
             alert("улюлюлю");
-
-            //        increaseBasketSum(selectedProduct);
-            //        selectedProduct.createProductElement(BASKET_PRODUCTS_ELEMENT);
-            //        BASKET_PRODUCTS_ELEMENT.querySelectorAll(".product").forEach(element => {
-            //            element.setAttribute("onClick", null);
-            //        });
         }
     });
 }

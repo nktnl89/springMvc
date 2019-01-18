@@ -56,17 +56,18 @@
 .foundedProducts .productPrice,
 .foundedProducts .addProductToOrder,
 .foundedProducts .deleteFromOrder,
-.popupBasketContent .addProductToOrder,
-:not(.popupBasketContent) .productPrice,/* .product:not(.opened):not(.admin)*/
-:not(.popupBasketContent) .addProductToOrder,/*.product:not(.opened):not(.admin)  */
-:not(.popupBasketContent) .deleteFromOrder {/*.product:not(.opened):not(.admin) */
+.basketProducts .addProductToOrder,
+.product:not(.opened).productPrice,
+.product:not(.admin).productPrice,
+.product:not(.opened).deleteFromOrder,
+.product:not(.opened).addProductToOrder {
     display: none;
     height: 50px;
     width: 200px;
 }
-.popupBasketContent .deleteFromOrder,
-.popupBasketContent .productPrice,
-.popupBasketContent .productText,
+.basketProducts.product.deleteFromOrder,
+.basketProducts.product.productPrice,
+.basketProducts.product.productText,
 .product.opened.productPrice,
 .product.opened.productText,
 .product.admin.productPrice,

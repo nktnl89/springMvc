@@ -133,11 +133,11 @@ function saveChangesClick(product) {
         contentType: "application/json",
         url: "products/update",
         data: JSON.stringify(product),
-        dataType: 'json',
+        dataType: "json",
         cache: false,
         timeout: 600000,
-        success: function (data) {
-        }
+//        success: function (data) {
+//        }
     });
 }
 function deleteProductOnClick(deleteBtn) {
@@ -167,6 +167,7 @@ function createPopupForNewProduct(){
     $("<div>", {class: "closeButton", text: "[X]"}).appendTo(".newProductHeader");
     $(".closeButton").click(function() {$(".createProductPopup").remove()});
     $("<form>", {id: "createProductForm"}).appendTo(".createProductPopupContent");
+
     $("<input>", {name: "img", type: "text", placeholder: "Путь до картинки"}).appendTo("#createProductForm");
     $("<input>", {name: "price", type: "text", placeholder: "Цена"}).appendTo("#createProductForm");
     $("<input>", {name: "text", type: "text", placeholder: "Описание"}).appendTo("#createProductForm");
@@ -186,13 +187,14 @@ $("#createProductSubmit").click(function (event) {
     event.preventDefault();
 });
 
+
 function createProductClick(product) {
     $.ajax({
         type: "POST",
         contentType: "application/json",
         url: "products/",
         data: JSON.stringify(product),
-        dataType: 'json',
+        dataType: "json",
         cache: false,
         timeout: 600000,
         success: function (data) {
